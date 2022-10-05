@@ -43,8 +43,11 @@ packer.startup(function(use)
   })
   use 'akinsho/nvim-bufferline.lua'
   use "olimorris/onedarkpro.nvim"
+  use "sainnhe/gruvbox-material"
   -- use 'github/copilot.vim'
 
   use 'lewis6991/gitsigns.nvim'
   use 'dinhhuy258/git.nvim' -- For git blame & browse
+  use 'tpope/vim-commentary'
+  use 'neoclide/vim-jsx-improve'
 end)
