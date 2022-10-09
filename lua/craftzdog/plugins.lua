@@ -44,6 +44,7 @@ packer.startup(function(use)
   use 'akinsho/nvim-bufferline.lua'
   use "olimorris/onedarkpro.nvim"
   use "sainnhe/gruvbox-material"
+  use "Shatur/neovim-session-manager"
   -- use 'github/copilot.vim'
 
   use 'lewis6991/gitsigns.nvim'
