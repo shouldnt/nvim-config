@@ -82,8 +82,8 @@ nvim_lsp.cssls.setup {
 }
 
 nvim_lsp.emmet_ls.setup {
-  filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'css' }, 
-  cmd = {'emmet-language-server', '--stdio'},
+  filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'css', 'sass', 'scss','less' }, 
+  cmd = {'emmet-ls', '--stdio'},
   capabilities = capabilities
 }
 
