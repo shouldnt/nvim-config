@@ -15,8 +15,9 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 1
 vim.opt.laststatus = 2
 vim.opt.expandtab = true
-vim.opt.scrolloff = 3 
-vim.opt.shell = 'fish'
+vim.opt.scrolloff = 3
+vim.opt.swapfile = false
+-- vim.opt.shell = 'fish'
 vim.opt.backupskip = { '/tmp/*', '/private/tmp/*' }
 vim.opt.inccommand = 'split'
 vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
@@ -28,6 +29,7 @@ vim.opt.wrap = false -- No Wrap lines
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 vim.opt.wildignore:append { '*/node_modules/*' }
+vim.opt.showtabline = 2
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
