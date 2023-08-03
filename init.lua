@@ -77,8 +77,10 @@ require('packer').startup(function(use)
 	use { "catppuccin/nvim", as = "catppuccin" }
 	-- code comment
 	use 'numToStr/Comment.nvim'
-
 	use "JoosepAlviste/nvim-ts-context-commentstring"
+
+	-- git plugin
+	use "tpope/vim-fugitive"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
