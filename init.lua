@@ -69,13 +69,16 @@ require('packer').startup(function(use)
 	}
 	-- auto detect indent
 	use "tpope/vim-sleuth"
-
 	use {
 		'nvim-lualine/lualine.nvim',
 		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 	}
-
+	-- colorscheme
 	use { "catppuccin/nvim", as = "catppuccin" }
+	-- code comment
+	use 'numToStr/Comment.nvim'
+
+	
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -239,3 +242,5 @@ require('lualine').setup()
 --colorscheme
 vim.cmd.colorscheme "catppuccin"
 
+-- code comment setup
+require('Comment').setup()
