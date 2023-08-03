@@ -78,7 +78,7 @@ require('packer').startup(function(use)
 	-- code comment
 	use 'numToStr/Comment.nvim'
 
-	
+	use "JoosepAlviste/nvim-ts-context-commentstring"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -116,8 +116,8 @@ cmp.setup({
 		['<Tab>'] = function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			-- elseif luasnip.expand_or_jumpable() then
-			-- 	luasnip.expand_or_jump()
+				-- elseif luasnip.expand_or_jumpable() then
+				-- 	luasnip.expand_or_jump()
 			else
 				fallback()
 			end
@@ -125,8 +125,8 @@ cmp.setup({
 		['<S-Tab>'] = function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			-- elseif luasnip.jumpable(-1) then
-			-- 	luasnip.jump(-1)
+				-- elseif luasnip.jumpable(-1) then
+				-- 	luasnip.jump(-1)
 			else
 				fallback()
 			end
@@ -138,8 +138,8 @@ cmp.setup({
 		-- { name = 'luasnip' }, -- For luasnip users.
 		-- { name = 'ultisnips' }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
-	}, {
-		{ name = 'buffer' },
+		}, {
+			{ name = 'buffer' },
 	})
 })
 
@@ -147,8 +147,8 @@ cmp.setup({
 cmp.setup.filetype('gitcommit', {
 	sources = cmp.config.sources({
 		{ name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-	}, {
-		{ name = 'buffer' },
+		}, {
+			{ name = 'buffer' },
 	})
 })
 
@@ -165,8 +165,8 @@ cmp.setup.cmdline(':', {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = 'path' }
-	}, {
-		{ name = 'cmdline' }
+		}, {
+			{ name = 'cmdline' }
 	})
 })
 
@@ -177,32 +177,32 @@ require('lspconfig')['tsserver'].setup {
 	capabilities = capabilities
 }
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+	callback = function(ev)
+		-- Enable completion triggered by <c-x><c-o>
+		vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
-  end,
+		-- Buffer local mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		local opts = { buffer = ev.buf }
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+		vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+		vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+		vim.keymap.set('n', '<space>wl', function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+			end, opts)
+		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set('n', '<space>f', function()
+			vim.lsp.buf.format { async = true }
+			end, opts)
+	end,
 })
 --end comp config
 
@@ -219,12 +219,15 @@ vim.keymap.set('n', '<space>fh', builtin.help_tags, {})
 --
 -- tree-sitter config
 require'nvim-treesitter.configs'.setup {
+	context_commentstring = {
+		enable = true,
+	},
 	indent = {
 		enable = true
 	},
 	highlight = {
-        enable = true,
-    },
+		enable = true,
+	},
 	ensure_installed = {
 		'javascript',
 		'typescript',
