@@ -4,6 +4,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.cursorline = true
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -60,6 +62,9 @@ require('packer').startup(function(use)
 		-- or                            , branch = '0.1.x',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
+
+	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
 	use 'nvim-treesitter/nvim-treesitter'
 	-- this plugin will fix jsx indent
 	use 'maxmellon/vim-jsx-pretty'
@@ -81,6 +86,10 @@ require('packer').startup(function(use)
 
 	-- git plugin
 	use "tpope/vim-fugitive"
+	
+	use "nvim-tree/nvim-tree.lua"
+	-- terminal inside neovim
+	use "akinsho/toggleterm.nvim"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -209,6 +218,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --end comp config
 
 -- telescope config
+
+require('telescope').setup{
+	defaults = {
+		file_ignore_patterns = {
+			"node_modules"
+		}
+	}
+}
+require('telescope').load_extension('fzf')
+
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<space>ff', builtin.find_files, {})
 vim.keymap.set('n', '<c-p>', builtin.find_files, {})
@@ -241,7 +260,11 @@ require'nvim-treesitter.configs'.setup {
 --end tree-sitter config
 
 -- lualine
-require('lualine').setup()
+require('lualine').setup({
+	sections = {
+		lualine_b = {vim.loop.cwd()}
+	}
+})
 --end lualine
 --
 --colorscheme
@@ -249,3 +272,35 @@ vim.cmd.colorscheme "catppuccin"
 
 -- code comment setup
 require('Comment').setup()
+
+-- nvim tree (file explorer)
+require("nvim-tree").setup()
+vim.keymap.set('n', '<space>e', ':NvimTreeOpen<cr>', {silent=true})
+
+-- terminal inside neovim
+require("toggleterm").setup()
+vim.keymap.set('n', '<c-`>', ':ToggleTerm direction=horizontal<cr>')
+function _G.set_terminal_keymaps()
+	local opts = {buffer = 0}
+	vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+	vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+	vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+	vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+	vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+	vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+	vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://toggleterm instead
+vim.cmd('autocmd! TermOpen term:// lua set_terminal_keymaps()')
+
+-- neovide config
+if vim.g.neovide then
+	print(vim.loop.cwd());
+	vim.g.neovide_window_title = vim.loop.cwd();
+	vim.g.neovide_cursor_vfx_mode = "railgun"
+	vim.g.neovide_cursor_vfx_particle_lifetime = 0.5
+	vim.g.neovide_cursor_vfx_particle_phase = 4.5
+	vim.g.neovide_cursor_vfx_particle_speed = 50.0
+	vim.g.neovide_cursor_vfx_particle_density = 10
+end
