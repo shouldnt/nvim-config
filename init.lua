@@ -57,12 +57,15 @@ require('packer').startup(function(use)
 	-- For vsnip users.
 	use 'hrsh7th/cmp-vsnip'
 	use 'hrsh7th/vim-vsnip'
+
+	-- note: should install ripgrep binary for faster fuzzy search
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.2',
 		-- or                            , branch = '0.1.x',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
+	-- this require fzf binary
 	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	use 'nvim-treesitter/nvim-treesitter'
