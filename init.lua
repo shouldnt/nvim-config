@@ -1,3 +1,6 @@
+-- todo: find all and Replace
+-- todo: stand alone git window for git stuff
+
 -- options
 vim.opt.number = true
 vim.opt.signcolumn = "yes"
