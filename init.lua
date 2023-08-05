@@ -266,11 +266,7 @@ require'nvim-treesitter.configs'.setup {
 --end tree-sitter config
 
 -- lualine
-require('lualine').setup({
-	sections = {
-		lualine_b = {vim.loop.cwd()}
-	}
-})
+require('lualine').setup()
 --end lualine
 --
 --colorscheme
