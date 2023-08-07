@@ -25,6 +25,7 @@ vim.opt.tabstop = 4
 -- })
 
 -- key mappings
+vim.keymap.set('i', "jj", "<esc>", {noremap = true});
 vim.keymap.set('n', "'", "`", {noremap = true});
 vim.keymap.set('n', "`", "'", {noremap = true});
 vim.keymap.set('n', "<BS>", "<c-6>", {noremap = true});
@@ -96,6 +97,10 @@ require('packer').startup(function(use)
 	use "nvim-tree/nvim-tree.lua"
 	-- terminal inside neovim
 	use "akinsho/toggleterm.nvim"
+
+	use "nvim-treesitter/nvim-treesitter-context"
+
+	use 'sindrets/diffview.nvim'
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -236,8 +241,8 @@ require('telescope').load_extension('fzf')
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<space>ff', builtin.find_files, {})
-vim.keymap.set('n', '<c-p>', builtin.find_files, {})
-vim.keymap.set('i', '<c-p>', builtin.find_files, {})
+vim.keymap.set('n', '<c-p>', builtin.buffers, {})
+vim.keymap.set('i', '<c-p>', builtin.buffers, {})
 vim.keymap.set('n', '<space>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<space>fb', builtin.buffers, {})
 vim.keymap.set('n', '<space>fh', builtin.help_tags, {})
@@ -276,12 +281,21 @@ vim.cmd.colorscheme "catppuccin"
 require('Comment').setup()
 
 -- nvim tree (file explorer)
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+	update_focused_file = {
+		enable = true,
+		update_root = false,
+		ignore_list = {"node_modules"},
+	},
+})
 vim.keymap.set('n', '<space>e', ':NvimTreeOpen<cr>', {silent=true})
 
 -- terminal inside neovim
 require("toggleterm").setup()
-vim.keymap.set('n', '<c-`>', ':ToggleTerm direction=horizontal<cr>')
+vim.keymap.set('n', '<C-`>', ':ToggleTerm direction=horizontal<cr>')
+vim.keymap.set('i', '<C-`>', function()
+	vim.cmd('ToggleTerm')
+end)
 function _G.set_terminal_keymaps()
 	local opts = {buffer = 0}
 	vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
@@ -306,3 +320,19 @@ if vim.g.neovide then
 	vim.g.neovide_cursor_vfx_particle_density = 10
 	vim.opt.guifont = { "Hack NFM", ":h11" }
 end
+
+-- nvim treesitter context 
+require'treesitter-context'.setup{
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+  line_numbers = true,
+  multiline_threshold = 20, -- Maximum number of lines to collapse for a single context line
+  trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+  mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+  -- Separator between context and content. Should be a single character string, like '-'.
+  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+  separator = nil,
+  zindex = 20, -- The Z-index of the context window
+  on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+}
