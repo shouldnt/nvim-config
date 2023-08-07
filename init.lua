@@ -298,11 +298,11 @@ vim.cmd('autocmd! TermOpen term:// lua set_terminal_keymaps()')
 
 -- neovide config
 if vim.g.neovide then
-	print(vim.loop.cwd());
 	vim.g.neovide_window_title = vim.loop.cwd();
 	vim.g.neovide_cursor_vfx_mode = "railgun"
 	vim.g.neovide_cursor_vfx_particle_lifetime = 0.5
 	vim.g.neovide_cursor_vfx_particle_phase = 4.5
 	vim.g.neovide_cursor_vfx_particle_speed = 50.0
 	vim.g.neovide_cursor_vfx_particle_density = 10
+	vim.opt.guifont = { "Hack NFM", ":h11" }
 end
