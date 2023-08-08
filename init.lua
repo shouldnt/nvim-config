@@ -240,9 +240,14 @@ require('telescope').setup{
 require('telescope').load_extension('fzf')
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<space>ff', builtin.find_files, {})
-vim.keymap.set('n', '<c-p>', builtin.buffers, {})
-vim.keymap.set('i', '<c-p>', builtin.buffers, {})
+function findNoIgnore(func) 
+	return function() 
+		func({no_ignore = true});
+	end
+end
+vim.keymap.set('n', '<space>ff', findNoIgnore(builtin.find_files), {})
+vim.keymap.set('n', '<c-p>', findNoIgnore(builtin.find_files), {})
+vim.keymap.set('i', '<c-p>', findNoIgnore(builtin.find_files), {})
 vim.keymap.set('n', '<space>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<space>fb', builtin.buffers, {})
 vim.keymap.set('n', '<space>fh', builtin.help_tags, {})
@@ -292,12 +297,10 @@ vim.keymap.set('n', '<space>e', ':NvimTreeOpen<cr>', {silent=true})
 
 -- terminal inside neovim
 require("toggleterm").setup()
-vim.keymap.set('n', '<C-`>', ':ToggleTerm direction=horizontal<cr>')
-vim.keymap.set('i', '<C-`>', function()
-	vim.cmd('ToggleTerm')
-end)
 function _G.set_terminal_keymaps()
 	local opts = {buffer = 0}
+	vim.keymap.set('t', '<C-`><C-`>', [[ToggleTerm direction=horizontal<CR>]], opts)
+	vim.keymap.set('t', '<C-`><C-1>', [[2ToggleTerm direction=horizontal<CR>]], opts)
 	vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
 	vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
 	vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
