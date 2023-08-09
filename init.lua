@@ -27,7 +27,7 @@ vim.opt.tabstop = 4
 -- key mappings
 vim.keymap.set('i', "jj", "<esc>", {noremap = true});
 vim.keymap.set('n', "'", "`", {noremap = true});
-vim.keymap.set('n', "`", "'", {noremap = true});
+vim.keymap.set('n', "`", "<nop>", {noremap = true});
 vim.keymap.set('n', "<BS>", "<c-6>", {noremap = true});
 vim.keymap.set('n', "<space>/", ":noh<cr>", {noremap = true});
 
@@ -298,10 +298,13 @@ vim.keymap.set('n', '<space>e', ':NvimTreeOpen<cr>', {silent=true})
 -- terminal inside neovim
 require("toggleterm").setup()
 
-vim.keymap.set('n', '<C-`><C-`>', function()
+vim.keymap.set('n', '``', function()
 	vim.cmd [[ToggleTerm direction=horizontal]]
-end, { silent = true, noremap = true	})
-vim.keymap.set('n', '<C-`>1', function()
+end, { noremap = true	})
+vim.keymap.set('n', '`1', function()
+	vim.cmd [[1ToggleTerm direction=horizontal]]
+end, { noremap = true	})
+vim.keymap.set('n', '`2', function()
 	vim.cmd [[2ToggleTerm direction=horizontal]]
 end, { silent = true, noremap = true	})
 
