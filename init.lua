@@ -3,6 +3,7 @@
 
 -- options
 vim.opt.number = true
+vim.opt.swapfile = true
 vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -235,7 +236,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --
 --diagnostic config
 vim.diagnostic.config({
-	virtual_text = false,
+	virtual_text = true,
 	float = {
 		show_header = false,
 		format = function(diagnostic)
