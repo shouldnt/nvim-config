@@ -48,6 +48,7 @@ local packer_bootstrap = ensure_packer()
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	-- My plugins here
+	use 'nvimdev/lspsaga.nvim'
 	use "williamboman/mason.nvim"
 	use "williamboman/mason-lspconfig.nvim"
 	use "neovim/nvim-lspconfig"
@@ -198,6 +199,10 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig')['tsserver'].setup {
 	capabilities = capabilities
 }
+require('lspconfig')['eslint'].setup {
+	capabilities = capabilities,
+}
+
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 	callback = function(ev)
@@ -227,6 +232,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end,
 })
 --end comp config
+--
+--diagnostic config
+vim.diagnostic.config({
+	virtual_text = false,
+	float = {
+		show_header = false,
+		format = function(diagnostic)
+			print(diagnostic)
+			return string.format('%s\n%s: %s', diagnostic.message, diagnostic.source, diagnostic.code)
+		end,
+	},
+})
+
+--end diagnostic config
 
 -- telescope config
 
@@ -334,3 +353,8 @@ require'treesitter-context'.setup{
   zindex = 20, -- The Z-index of the context window
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
+
+-- lsp saga setup
+require('lspsaga').setup({})
+vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_next<cr>')
+
