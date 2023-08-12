@@ -2,6 +2,7 @@
 -- todo: stand alone git window for git stuff
 
 -- options
+vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.swapfile = true
 vim.opt.signcolumn = "yes"
@@ -83,9 +84,9 @@ require('packer').startup(function(use)
 	}
 	-- auto detect indent
 	use "tpope/vim-sleuth"
+	use { 'nvim-tree/nvim-web-devicons' }
 	use {
 		'nvim-lualine/lualine.nvim',
-		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 	}
 	-- colorscheme
 	use { "catppuccin/nvim", as = "catppuccin" }
@@ -312,6 +313,9 @@ require("nvim-tree").setup({
 		update_root = false,
 		ignore_list = {"node_modules"},
 	},
+	filters = {
+		git_ignored = false
+	}
 })
 vim.keymap.set('n', '<space>e', ':NvimTreeOpen<cr>', {silent=true})
 
