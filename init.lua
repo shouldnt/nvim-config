@@ -61,7 +61,7 @@ require('packer').startup(function(use)
 	use 'hrsh7th/cmp-cmdline'
 	use 'hrsh7th/nvim-cmp'
 
-    use "lukas-reineke/lsp-format.nvim"
+	use "lukas-reineke/lsp-format.nvim"
 
 	-- For vsnip users.
 	use 'hrsh7th/cmp-vsnip'
@@ -98,7 +98,7 @@ require('packer').startup(function(use)
 
 	-- git plugin
 	use "tpope/vim-fugitive"
-	
+
 	use "nvim-tree/nvim-tree.lua"
 	-- terminal inside neovim
 	use "akinsho/toggleterm.nvim"
@@ -198,10 +198,31 @@ cmp.setup.cmdline(':', {
 })
 
 -- Set up lspconfig.
+require("lsp-format").setup {}
+local on_attach = function(client)
+	require("lsp-format").on_attach(client)
+end
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+local prettier = {
+    formatCommand = [[prettier --stdin-filepath ${INPUT} ${--tab-width:tab_width}]],
+    formatStdin = true,
+}
 require('lspconfig')['tsserver'].setup {
-	capabilities = capabilities
+	capabilities = capabilities,
+	on_attach = on_attach,
+	init_options = { documentFormatting = true },
+    settings = {
+        languages = {
+            typescript = { prettier },
+            javascript = { prettier },
+        },
+    },
+}
+require('lspconfig')['jsonls'].setup {
+	capabilities = capabilities,
+	on_attach = on_attach,
 }
 require('lspconfig')['eslint'].setup {
 	capabilities = capabilities,
@@ -225,14 +246,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
 		vim.keymap.set('n', '<space>wl', function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-			end, opts)
+		end, opts)
 		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
 		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
 		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 		vim.keymap.set('n', '<space>f', function()
 			vim.lsp.buf.format { async = true }
-			end, opts)
+		end, opts)
 	end,
 })
 --end comp config
@@ -347,18 +368,18 @@ end
 
 -- nvim treesitter context 
 require'treesitter-context'.setup{
-  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-  line_numbers = true,
-  multiline_threshold = 20, -- Maximum number of lines to collapse for a single context line
-  trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-  mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
-  -- Separator between context and content. Should be a single character string, like '-'.
-  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-  separator = nil,
-  zindex = 20, -- The Z-index of the context window
-  on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+	enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+	max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+	min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+	line_numbers = true,
+	multiline_threshold = 20, -- Maximum number of lines to collapse for a single context line
+	trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+	mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+	-- Separator between context and content. Should be a single character string, like '-'.
+	-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+	separator = nil,
+	zindex = 20, -- The Z-index of the context window
+	on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
 
 -- lsp saga setup
