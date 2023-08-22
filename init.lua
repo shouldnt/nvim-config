@@ -32,6 +32,18 @@ vim.keymap.set('n', "'", "`", {noremap = true});
 vim.keymap.set('n', "`", "<nop>", {noremap = true});
 vim.keymap.set('n', "<BS>", "<c-6>", {noremap = true});
 vim.keymap.set('n', "<space>/", ":noh<cr>", {noremap = true});
+vim.keymap.set('n', "<space>p", '"+[p', {noremap = true});
+vim.keymap.set('n', "<space>y", '"+y', {noremap = true});
+vim.keymap.set('v', "<space>y", '"+y', {noremap = true});
+vim.keymap.set('i', "<c-v>", '<esc>"+[p', {noremap = true});
+
+--fine-grain undo
+local undoBreaks = {"<space>", ",", '.', ';', ':', '(', ')', '{', '}'}
+
+for key,value in ipairs(undoBreaks) 
+do
+	vim.keymap.set('i', value, value .. '<c-g>u');
+end
 
 -- plugins config
 local ensure_packer = function()
