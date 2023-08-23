@@ -9,6 +9,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.cursorline = true
+
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
