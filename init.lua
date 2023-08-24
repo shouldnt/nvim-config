@@ -240,6 +240,15 @@ require('lspconfig')['jsonls'].setup {
 require('lspconfig')['eslint'].setup {
 	capabilities = capabilities,
 }
+require('lspconfig')['cssls'].setup {
+	capabilities = capabilities,
+}
+require('lspconfig')['emmet_ls'].setup {
+	capabilities = capabilities,
+}
+require('lspconfig')['tailwindcss'].setup {
+	capabilities = capabilities,
+}
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
