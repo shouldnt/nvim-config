@@ -120,6 +120,12 @@ require('packer').startup(function(use)
 
 	use 'sindrets/diffview.nvim'
 
+	use 'mbbill/undotree'	
+
+	use {
+		'stevearc/oil.nvim'
+	}
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if packer_bootstrap then
@@ -408,3 +414,5 @@ require'treesitter-context'.setup{
 require('lspsaga').setup({})
 vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_next<cr>')
 
+-- oil nvim
+require('oil').setup()
