@@ -397,6 +397,7 @@ end
 -- lsp saga setup
 require('lspsaga').setup({})
 vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_next<cr>')
+vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_prev<cr>')
 
 -- oil nvim
 require('oil').setup()
