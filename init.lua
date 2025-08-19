@@ -103,7 +103,7 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- disable swap file
 vim.o.swapfile = false
@@ -139,7 +139,7 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 220
 
 -- Configure how new splits should be opened
 vim.o.splitright = true
@@ -163,7 +163,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 1
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -367,6 +367,7 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  { 'kevinhwang91/nvim-bqf' },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -512,6 +513,11 @@ require('lazy').setup({
   {
     'nvim-tree/nvim-tree.lua',
     opts = {},
+    config = function()
+      require('nvim-tree').setup {}
+      vim.keymap.set('n', '<leader>ee', vim.cmd.NvimTreeToggle)
+      vim.keymap.set('n', '<leader>ef', vim.cmd.NvimTreeFocus)
+    end,
   },
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -960,14 +966,14 @@ require('lazy').setup({
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      -- require('mini.ai').setup { n_lines = 500 }
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
