@@ -518,7 +518,9 @@ require('lazy').setup({
     'nvim-tree/nvim-tree.lua',
     opts = {},
     config = function()
-      require('nvim-tree').setup {}
+      require('nvim-tree').setup {
+        update_focused_file = { enable = true },
+      }
       vim.keymap.set('n', '<leader>ee', vim.cmd.NvimTreeToggle)
       vim.keymap.set('n', '<leader>ef', vim.cmd.NvimTreeFocus)
     end,
